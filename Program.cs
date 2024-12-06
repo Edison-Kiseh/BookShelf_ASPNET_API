@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// // Correctly bind to all network interfaces
+builder.WebHost.UseUrls("http://*:5152");
+
 //Add services to the container.
 builder.Services.AddControllers();//add controller classes to be used
 
@@ -28,37 +31,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();  //redirect to https
+// app.UseHttpsRedirection();  //redirect to https
 app.UseAuthorization(); //allow [ attribute in controller
 app.MapControllers();   //map all controller classes
 app.Run();  //start API
-
-// public class MainProgram
-// {
-//     public static void Main(string[] args)
-//         => CreateHostBuilder(args).Build().Run();
-
-//     // EF Core uses this method at design time to access the DbContext
-//     public static IHostBuilder CreateHostBuilder(string[] args)
-//         => Host.CreateDefaultBuilder(args)
-//             .ConfigureWebHostDefaults(
-//                 webBuilder => webBuilder.UseStartup<Startup>());
-// }
-
-// public class Startup
-// {
-//     public void ConfigureServices(IServiceCollection services)
-//         => services.AddDbContext<ApplicationDbContext>();
-
-//     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-//     {
-//     }
-// }
-
-// public class ApplicationDbContext : DbContext
-// {
-//     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-//         : base(options)
-//     {
-//     }
-// }

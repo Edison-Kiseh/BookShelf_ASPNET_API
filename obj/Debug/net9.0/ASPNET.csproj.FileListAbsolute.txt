@@ -46,3 +46,4 @@ C:\Users\Edison\OneDrive\Desktop\ASPNET\obj\Debug\net9.0\ASPNET.genruntimeconfig
 C:\Users\Edison\OneDrive\Desktop\ASPNET\obj\Debug\net9.0\ref\ASPNET.dll
 C:\Users\Edison\OneDrive\Desktop\ASPNET\bin\Debug\net9.0\AutoMapper.dll
 C:\Users\Edison\OneDrive\Desktop\ASPNET\bin\Debug\net9.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Edison\OneDrive\Desktop\ASPNET\obj\Debug\net9.0\ASPNET.sourcelink.json
