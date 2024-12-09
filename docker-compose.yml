@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: "mysql_container"
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: books
+      MYSQL_USER: book_user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"  # MySQL default port
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  ###
+  api:
+    container_name: "aspnet_api"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"  # Exposing the API on port 5000
+    depends_on:
+      - mysql  # Ensure the API waits for MySQL to be ready
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mysql_container;Port=3306;Database=books;User=book_user;Password=password;
+
+volumes:
+  mysql-data:

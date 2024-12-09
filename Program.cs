@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // // Correctly bind to all network interfaces
-builder.WebHost.UseUrls("http://*:5152");
+builder.WebHost.UseUrls("http://*:80");
 
 //Add services to the container.
 builder.Services.AddControllers();//add controller classes to be used
