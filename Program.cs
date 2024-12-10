@@ -25,6 +25,13 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
+// Apply migrations automatically at startup
+// using (var scope = app.Services.CreateScope())
+// {
+//     var dbContext = scope.ServiceProvider.GetRequiredService<BookContext>();
+//     dbContext.Database.Migrate(); // Apply pending migrations
+// }
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

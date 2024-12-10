@@ -1,31 +1,42 @@
 version: '3.8'
 
 services:
-  mysql:
-    container_name: "mysql_container"
-    image: mysql:latest
+  mysql-db:
+    container_name: "mysql_db"
+    image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: books
       MYSQL_USER: book_user
       MYSQL_PASSWORD: password
     ports:
-      - "3307:3306"  # MySQL default port
+      - "8083:3306"  # MySQL default port
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
 
-  ###
   api:
     container_name: "aspnet_api"
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:80"  # Exposing the API on port 5000
+      - "5000:80"  # Exposing the API on port 5000
     depends_on:
-      - mysql  # Ensure the API waits for MySQL to be ready
+      - mysql-db
     environment:
-      - ConnectionStrings__DefaultConnection=Server=mysql_container;Port=3306;Database=books;User=book_user;Password=password;
+      - ConnectionStrings__DefaultConnection=Server=mysql-db;Port=3306;Database=books;User=book_user;Password=password;
+
+  myshop-migration:
+    container_name: myshop-migration
+    build:
+      context: .
+      dockerfile: Dockerfile.migration
+    command: /bin/sh -c "/root/.dotnet/tools/dotnet-ef database update && /root/.dotnet/tools/dotnet run --seed && tail -f /dev/null"
+    depends_on:
+      - mysql-db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    restart: "always"
 
 volumes:
-  mysql-data:
+  mysql_data: {}
